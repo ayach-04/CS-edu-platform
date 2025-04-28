@@ -22,7 +22,7 @@ app.use(cors({
     frontendUrl,
     'http://localhost:5174',
     'https://edu-cs-platform.vercel.app',
-    'https://edu-cs-platform-client.vercel.app'
+    'https://cs-edu-platform-pl5o.vercel.app'
   ], // Allow specific origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
