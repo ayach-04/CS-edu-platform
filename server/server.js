@@ -4,6 +4,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
+// Import Cloudinary configuration
+const { cloudinary } = require('./config/cloudinary');
+
 // Load environment variables
 dotenv.config();
 
@@ -11,9 +14,14 @@ dotenv.config();
 const app = express();
 
 // Middleware
-// Configure CORS - simple configuration for development
+// Configure CORS - for both development and production
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'], // Allow specific origins
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://edu-cs-platform.vercel.app',
+    'https://edu-cs-platform-client.vercel.app'
+  ], // Allow specific origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']

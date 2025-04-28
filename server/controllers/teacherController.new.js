@@ -338,25 +338,45 @@ const uploadChapterFile = async (req, res) => {
     // Add file to chapter
     module.chapters[chapterIndex].files = module.chapters[chapterIndex].files || [];
 
-    // Get file path and other details
-    const { uploadsDir } = require('../config/uploadConfig');
+    // Get file details
     const fs = require('fs');
     const path = require('path');
 
-    // Create a URL that can be used to access the file
-    const filePath = `/uploads/${req.file.filename}`;
-    const fileSize = req.file.size || 0;
+    // Check if we're in production (using Cloudinary)
+    const isProduction = process.env.NODE_ENV === 'production';
 
-    console.log('File upload details:', {
-      originalFilename: req.file.originalname,
-      savedFilename: req.file.filename,
-      filePath,
-      fileSize
-    });
+    // Get file path and size
+    let filePath, fileSize;
 
-    // Verify the file exists in the uploads directory
-    const physicalPath = path.join(uploadsDir, req.file.filename);
-    const fileExists = fs.existsSync(physicalPath);
+    if (isProduction && req.fileUrl) {
+      // In production, use the Cloudinary URL
+      filePath = req.fileUrl;
+      fileSize = req.file.size || 0;
+
+      console.log('Cloudinary file upload details:', {
+        originalFilename: req.file.originalname,
+        cloudinaryUrl: req.fileUrl,
+        fileSize
+      });
+    } else {
+      // In development, use the local file path
+      const { uploadsDir } = require('../config/uploadConfig');
+      filePath = `/uploads/${req.file.filename}`;
+      fileSize = req.file.size || 0;
+
+      console.log('Local file upload details:', {
+        originalFilename: req.file.originalname,
+        savedFilename: req.file.filename,
+        filePath,
+        fileSize
+      });
+
+      // Verify the file exists in the uploads directory
+      const physicalPath = path.join(uploadsDir, req.file.filename);
+      const fileExists = fs.existsSync(physicalPath);
+
+      console.log('File exists in uploads directory:', fileExists);
+    }
 
     console.log('\n==== FILE STORAGE DEBUG ====');
     console.log('File stored:', {
@@ -557,25 +577,45 @@ const uploadSyllabusFile = async (req, res) => {
       };
     }
 
-    // Get file path and other details
-    const { uploadsDir } = require('../config/uploadConfig');
+    // Get file details
     const fs = require('fs');
     const path = require('path');
 
-    // Create a URL that can be used to access the file
-    const filePath = `/uploads/${req.file.filename}`;
-    const fileSize = req.file.size || 0;
+    // Check if we're in production (using Cloudinary)
+    const isProduction = process.env.NODE_ENV === 'production';
 
-    console.log('File upload details:', {
-      originalFilename: req.file.originalname,
-      savedFilename: req.file.filename,
-      filePath,
-      fileSize
-    });
+    // Get file path and size
+    let filePath, fileSize;
 
-    // Verify the file exists in the uploads directory
-    const physicalPath = path.join(uploadsDir, req.file.filename);
-    const fileExists = fs.existsSync(physicalPath);
+    if (isProduction && req.fileUrl) {
+      // In production, use the Cloudinary URL
+      filePath = req.fileUrl;
+      fileSize = req.file.size || 0;
+
+      console.log('Cloudinary file upload details:', {
+        originalFilename: req.file.originalname,
+        cloudinaryUrl: req.fileUrl,
+        fileSize
+      });
+    } else {
+      // In development, use the local file path
+      const { uploadsDir } = require('../config/uploadConfig');
+      filePath = `/uploads/${req.file.filename}`;
+      fileSize = req.file.size || 0;
+
+      console.log('Local file upload details:', {
+        originalFilename: req.file.originalname,
+        savedFilename: req.file.filename,
+        filePath,
+        fileSize
+      });
+
+      // Verify the file exists in the uploads directory
+      const physicalPath = path.join(uploadsDir, req.file.filename);
+      const fileExists = fs.existsSync(physicalPath);
+
+      console.log('File exists in uploads directory:', fileExists);
+    }
 
     console.log('\n==== SYLLABUS FILE STORAGE DEBUG ====');
     console.log('File stored:', {
@@ -846,14 +886,39 @@ const uploadReferenceFile = async (req, res) => {
       });
     }
 
-    // Get file path and other details
-    const { uploadsDir } = require('../config/uploadConfig');
+    // Get file details
     const fs = require('fs');
     const path = require('path');
 
-    // Create a URL that can be used to access the file
-    const filePath = `/uploads/${req.file.filename}`;
-    const fileSize = req.file.size || 0;
+    // Check if we're in production (using Cloudinary)
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    // Get file path and size
+    let filePath, fileSize;
+
+    if (isProduction && req.fileUrl) {
+      // In production, use the Cloudinary URL
+      filePath = req.fileUrl;
+      fileSize = req.file.size || 0;
+
+      console.log('Cloudinary file upload details:', {
+        originalFilename: req.file.originalname,
+        cloudinaryUrl: req.fileUrl,
+        fileSize
+      });
+    } else {
+      // In development, use the local file path
+      const { uploadsDir } = require('../config/uploadConfig');
+      filePath = `/uploads/${req.file.filename}`;
+      fileSize = req.file.size || 0;
+
+      console.log('Local file upload details:', {
+        originalFilename: req.file.originalname,
+        savedFilename: req.file.filename,
+        filePath,
+        fileSize
+      });
+    }
 
     // Create file object with all necessary metadata
     const fileObject = {
