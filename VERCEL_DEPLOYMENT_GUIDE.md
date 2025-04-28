@@ -70,6 +70,7 @@ This guide will walk you through deploying your Edu CS Platform to Vercel. The p
      - `CLOUDINARY_CLOUD_NAME`: Your Cloudinary cloud name
      - `CLOUDINARY_API_KEY`: Your Cloudinary API key
      - `CLOUDINARY_API_SECRET`: Your Cloudinary API secret
+     - `FRONTEND_URL`: Your frontend URL (e.g., https://edu-cs-platform-client.vercel.app)
 
 7. Redeploy with the environment variables:
    ```
@@ -129,13 +130,17 @@ This guide will walk you through deploying your Edu CS Platform to Vercel. The p
 ## Troubleshooting
 
 ### CORS Issues
-If you encounter CORS issues, make sure your backend's CORS configuration includes your frontend domain:
+If you encounter CORS issues, make sure your backend's CORS configuration includes your frontend domain. The application is configured to use the `FRONTEND_URL` environment variable, so make sure it's set correctly in your Vercel environment variables.
 
 ```javascript
+// The server is configured to use the FRONTEND_URL environment variable
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 app.use(cors({
   origin: [
-    'http://localhost:5173',
+    frontendUrl,
     'http://localhost:5174',
+    'https://edu-cs-platform.vercel.app',
     'https://edu-cs-platform-client.vercel.app'
   ],
   credentials: true,

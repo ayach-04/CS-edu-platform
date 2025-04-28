@@ -15,9 +15,11 @@ const app = express();
 
 // Middleware
 // Configure CORS - for both development and production
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 app.use(cors({
   origin: [
-    'http://localhost:5173',
+    frontendUrl,
     'http://localhost:5174',
     'https://edu-cs-platform.vercel.app',
     'https://edu-cs-platform-client.vercel.app'
@@ -26,6 +28,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Log the allowed origins for debugging
+console.log('CORS configured with frontend URL:', frontendUrl);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
