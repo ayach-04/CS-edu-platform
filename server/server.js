@@ -23,7 +23,7 @@ app.use(cors({
     'http://localhost:5174',
     'https://edu-cs-platform.vercel.app',
     'https://cs-edu-platform-pl5o.vercel.app'
-  ], // Allow specific origins
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
